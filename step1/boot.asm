@@ -18,20 +18,7 @@ step2:
     mov sp, 0x7c00
 
     sti ; Enables Interrupts
-    mov ah, 2 ;Read Sector sommand
-    mov al, 1 ; one sector to read
-    mov ch, 0 ; cylinder low eight bits
-    mov cl, 2 ; Read Sector Two
-    mov dh, 0 ; Head number
-    mov bx, buffer
-    int 0x13
-    jc error
-
-    mov si, buffer
-    call print
-    jmp $
-error: 
-    mov si, error_message
+    mov si, message
     call print
     jmp $
 print:
@@ -48,8 +35,7 @@ print_char:
     mov ah, 0eh
     int 0x10
     ret
-error_message: db "Failed to load sector", 0 
+message: db 'Hello World!', 0
+
 times 510-($ - $$) db 0
 dw 0xAA55
-
-buffer: 
